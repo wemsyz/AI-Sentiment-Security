@@ -1,0 +1,8 @@
+*.safetensors
+*.pt
+*.h5
+*.bin
+*.pkl
+*.zip
+*.tar
+*.gz
