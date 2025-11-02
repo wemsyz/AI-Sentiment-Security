@@ -27,8 +27,8 @@ gdown.download(scaler_url, scaler_output, quiet=False)
 
 
 # Load model and scaler (Supervised ML Task)
-model = joblib.load("XGBClassifier_model.pkl")
-scaler = joblib.load("scaler.pkl")
+model = joblib.load(model_output)
+scaler = joblib.load(scaler_output)
 
 
 st.write("This app predicts whether a website is **Legitimate** or **Phishing** based on its attributes.")
