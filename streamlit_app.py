@@ -1,10 +1,4 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
-import torch
-from transformers import AutoTokenizer
-from transformers import AutoModelForSequenceClassification
-import joblib
 
 st.set_page_config(page_title="⚡ AI Sentiment & Security", layout="centered")
 
