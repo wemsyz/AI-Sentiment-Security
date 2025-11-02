@@ -2,6 +2,29 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import gdown
+import os
+
+
+# Create a folder to store downloaded files
+os.makedirs("models", exist_ok=True)
+
+# File IDs from your Google Drive share links
+model_file_id = "1_zQekOS2UlJp1a1r51gU4LvM1yp6VVh6"
+scaler_file_id = "1eS1uBNp6wvB6eTWqgHIEiVLbJsJdvz8B"
+
+# Generate direct download URLs for both files
+model_url = f"https://drive.google.com/uc?id=1_zQekOS2UlJp1a1r51gU4LvM1yp6VVh6"
+scaler_url = f"https://drive.google.com/uc?id=1eS1uBNp6wvB6eTWqgHIEiVLbJsJdvz8B"
+
+# Output paths 
+model_output = "models/XGBClassifier_model.pkl"
+scaler_output = "models/scaler.pkl"
+
+# Download both files
+gdown.download(model_url, model_output, quiet=False)
+gdown.download(scaler_url, scaler_output, quiet=False)
+
 
 # Load model and scaler (Supervised ML Task)
 model = joblib.load("XGBClassifier_model.pkl")

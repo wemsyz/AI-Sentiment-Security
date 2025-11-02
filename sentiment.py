@@ -7,7 +7,7 @@ from transformers import AutoModelForSequenceClassification
 
 
 # Load model and tokenizer (Movie Review Sentiment Classifier)
-MODEL_PATH = r"C:\Users\HP-EliteBook\Desktop\streamlit_app\streamlit\Notebooks"
+MODEL_PATH = "google-bert/bert-base-uncased"
 
 @st.cache_resource
 def load_model():
