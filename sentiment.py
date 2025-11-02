@@ -1,24 +1,48 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import gdown
+import os
+import zipfile
 import torch
 from transformers import AutoTokenizer
 from transformers import AutoModelForSequenceClassification
 
 
-# Load model and tokenizer (Movie Review Sentiment Classifier)
-MODEL_PATH = "google-bert/bert-base-uncased"
+# Folder paths
+MODEL_DIR = "models/Notebooks"
+ZIP_PATH = "models/Notebooks.zip"
 
-@st.cache_resource
-def load_model():
-    tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
-    model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.to(device)
-    model.eval()
-    return tokenizer, model, device
+# Create model folder
+os.makedirs("models", exist_ok=True)
 
-tokenizer, model, device = load_model()
+# Google Drive file ID of zip folder
+file_id = "1DkU12ZX_3x3cBLHiXBOqDR5os4LZWZ5-"
+
+# Generate direct download link
+url = f"https://drive.google.com/uc?id=1DkU12ZX_3x3cBLHiXBOqDR5os4LZWZ5-"
+
+# Download and extract files
+if not os.path.exists(MODEL_DIR):
+    st.info("Downloading fine-tuned sentiment model from Google Drive...")
+    gdown.download(url, ZIP_PATH, quiet=False)
+
+    st.info("Extracting model files...")
+    with zipfile.ZipFile(ZIP_PATH, "r") as zip_ref:
+        zip_ref.extractall("models")
+
+st.success("Model files ready!")
+
+# Load model and tokenizer from extracted folder
+st.info("Loading fine-tuned model... please wait...")
+tokenizer = AutoTokenizer.from_pretrained(MODEL_DIR)
+model = AutoModelForSequenceClassification.from_pretrained(MODEL_DIR)
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+model.eval()
+
+st.success("Model loaded successfully!")
 
 st.subheader("🎬 IMDb Movie Review Sentiment Analysis")
 st.markdown("Type a movie review below and let BERT **analyze** _its sentiment!_")
